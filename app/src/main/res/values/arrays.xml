@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="formats">
+        <item>mp3</item>
+        <item>mav</item>
+        <item>aac</item>
+        <item>ogg</item>
+        <item>wav</item>
+        <item>flac</item>
+    </array>
+    <array name="qualities">
+        <item>24k</item>
+        <item>56k</item>
+        <item>96k</item>
+        <item>128k</item>
+        <item>196k</item>
+    </array>
+</resources>

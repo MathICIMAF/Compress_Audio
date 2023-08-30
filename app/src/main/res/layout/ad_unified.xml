@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.gms.ads.nativead.NativeAdView xmlns:android="http://schemas.android.com/apk/res/android" xmlns:card_view="http://schemas.android.com/apk/res-auto" android:orientation="vertical" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginLeft="8.3dp" android:layout_marginRight="8.3dp" android:layout_marginBottom="4dp" card_view:cardCornerRadius="@dimen/cardview_default_radius" card_view:cardElevation="@dimen/cardview_default_elevation">
+    <androidx.cardview.widget.CardView android:id="@+id/ad_view" android:layout_width="match_parent" android:layout_height="wrap_content">
+        <LinearLayout android:layout_gravity="center" android:orientation="vertical" android:layout_width="match_parent" android:layout_height="wrap_content">
+            <TextView style="@style/AdAttribution"/>
+            <com.google.android.gms.ads.nativead.MediaView android:layout_gravity="center_horizontal" android:id="@+id/ad_media" android:layout_width="match_parent" android:layout_height="210dp" android:layout_marginTop="5dp"/>
+            <FrameLayout android:layout_width="match_parent" android:layout_height="wrap_content">
+                <LinearLayout android:orientation="vertical" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginLeft="13.3dp" android:layout_marginTop="10dp">
+                    <TextView android:textAppearance="?attr/textAppearanceOverline" android:textSize="17sp" android:textStyle="bold" android:textColor="@color/purple_500" android:id="@+id/ad_headline" android:layout_width="wrap_content" android:layout_height="0dp" android:text="Prueba" android:layout_weight="1" android:lineSpacingExtra="3dp"/> /&gt; 
+                    <TextView android:textAppearance="?attr/textAppearanceOverline" android:textSize="14sp" android:textColor="@color/purple_700" android:id="@+id/ad_body" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="5dp" android:layout_marginBottom="13dp" android:text="probando" android:lineSpacingExtra="2sp"/>
+                    <Button android:textSize="18sp" android:textColor="@android:color/white" android:id="@+id/ad_call_to_action" android:background="@drawable/back_button" android:layout_width="match_parent" android:layout_height="40dp" android:layout_margin="10dp" android:text=""/>
+                </LinearLayout>
+            </FrameLayout>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</com.google.android.gms.ads.nativead.NativeAdView>

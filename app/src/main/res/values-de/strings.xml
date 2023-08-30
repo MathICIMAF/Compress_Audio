@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Komprimieren Sie Audios</string>
+    <string name="completed">Komprimierung abgeschlossen!!!</string>
+    <string name="compressing">Komprimieren von Audio</string>
+    <string name="compressing1">Komprimieren</string>
+
+    <string name="folder">Ausgabeordner:</string>
+    <string name="format">Ausgabeformat</string>
+    <string name="of">von</string>
+    <string name="open_path">Ausgänge</string>
+    <string name="progress">Fortschritt</string>
+    <string name="results">Ergebnisse</string>
+
+    <string name="select_bitrate">Wählen Sie Bitrate</string>
+    <string name="select_file">Wählen Sie\nAudiodatei aus</string>
+    <string name="select_folder">Wählen Sie\nAudios-Ordner</string>
+    <string name="select_format">Bitte wählen Sie das Audioausgabeformat</string>
+    <string name="select_quality">Wählen Sie die Audioqualität</string>
+
+    <string name="success">Erfolg:</string>
+    <string name="error">Fehler:</string>
+
+    <string name="action_settings">Einstellungen</string>
+
+    <string name="empty">Leerer Ordner</string>
+</resources>

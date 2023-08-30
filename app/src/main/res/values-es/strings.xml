@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Comprimir Audios</string>
+    <string name="completed">Proceso terminado!!!</string>
+    <string name="compressing">Comprimiendo audio</string>
+    <string name="compressing1">Comprimiendo</string>
+
+    <string name="folder">Carpeta de salida:</string>
+    <string name="format">Formato de salida</string>
+    <string name="of">de</string>
+    <string name="open_path">Salidas</string>
+    <string name="progress">Progreso</string>
+    <string name="results">Resultados</string>
+
+    <string name="select_bitrate">Selecciona Bitrate</string>
+    <string name="select_file">Selecciona\nFichero Audio</string>
+    <string name="select_folder">Selecciona\nCarpeta Audio</string>
+    <string name="select_format">Por favor selecciona el formato de salida</string>
+    <string name="select_quality">Selecciona la calidad de audio</string>
+
+    <string name="success">Comprimidos:</string>
+    <string name="error">Error:</string>
+
+    <string name="action_settings">Ajustes</string>
+
+    <string name="empty">Carpeta vacía</string>
+</resources>
