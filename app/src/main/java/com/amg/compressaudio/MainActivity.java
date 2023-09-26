@@ -71,11 +71,11 @@ public class MainActivity extends AppCompatActivity {
             public void onInitializationComplete(InitializationStatus initializationStatus) {
             }
         });
-        this.percentText = (TextView) findViewById(R.id.percent);
-        this.countText = (TextView) findViewById(R.id.counter);
-        this.fileText = (TextView) findViewById(R.id.filename);
-        this.errorText = (TextView) findViewById(R.id.error);
-        this.successText = (TextView) findViewById(R.id.success);
+        this.percentText = findViewById(R.id.percent);
+        this.countText = findViewById(R.id.counter);
+        this.fileText = findViewById(R.id.filename);
+        this.errorText = findViewById(R.id.error);
+        this.successText = findViewById(R.id.success);
         ((AdView) findViewById(R.id.adView)).loadAd(new AdRequest.Builder().build());
         if (ContextCompat.checkSelfPermission(this, "android.permission.READ_EXTERNAL_STORAGE") != 0 && ContextCompat.checkSelfPermission(this, "android.permission.WRITE_EXTERNAL_STORAGE") != 0) {
             ActivityCompat.requestPermissions(this, new String[]{"android.permission.READ_EXTERNAL_STORAGE", "android.permission.WRITE_EXTERNAL_STORAGE"}, 1234);
@@ -98,12 +98,12 @@ public class MainActivity extends AppCompatActivity {
         builder.forNativeAd(new NativeAd.OnNativeAdLoadedListener() { // from class: com.amg.compressaudio.MainActivity.2
             @Override // com.google.android.gms.ads.nativead.NativeAd.OnNativeAdLoadedListener
             public void onNativeAdLoaded(NativeAd nativeAd) {
-                if (!(Build.VERSION.SDK_INT >= 17 ? MainActivity.this.isDestroyed() : false) && !MainActivity.this.isFinishing() && !MainActivity.this.isChangingConfigurations()) {
+                if (!( MainActivity.this.isDestroyed()) && !MainActivity.this.isFinishing() && !MainActivity.this.isChangingConfigurations()) {
                     if (MainActivity.this.nativeAd != null) {
                         MainActivity.this.nativeAd.destroy();
                     }
                     MainActivity.this.nativeAd = nativeAd;
-                    MainActivity.populateNativeAdView(nativeAd, (NativeAdView) MainActivity.this.getLayoutInflater().inflate(R.layout.ad_unified, (ViewGroup) null));
+                    MainActivity.populateNativeAdView(nativeAd, (NativeAdView) MainActivity.this.getLayoutInflater().inflate(R.layout.ad_unified, null));
                     return;
                 }
                 nativeAd.destroy();
@@ -118,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public static void populateNativeAdView(NativeAd nativeAd, NativeAdView adView) {
-        adView.setMediaView((MediaView) adView.findViewById(R.id.ad_media));
+        adView.setMediaView(adView.findViewById(R.id.ad_media));
         adView.setHeadlineView(adView.findViewById(R.id.ad_headline));
         adView.setBodyView(adView.findViewById(R.id.ad_body));
         adView.setCallToActionView(adView.findViewById(R.id.ad_call_to_action));
@@ -161,7 +161,7 @@ public class MainActivity extends AppCompatActivity {
         if (!file.exists()) {
             file.mkdirs();
         }
-        ((LinearLayout) findViewById(R.id.file_layout)).setOnClickListener(new View.OnClickListener() { // from class: com.amg.compressaudio.MainActivity.5
+        findViewById(R.id.file_layout).setOnClickListener(new View.OnClickListener() { // from class: com.amg.compressaudio.MainActivity.5
             @Override // android.view.View.OnClickListener
             public void onClick(View view) {
                 Intent intent = new Intent();
@@ -172,13 +172,13 @@ public class MainActivity extends AppCompatActivity {
                 mainActivity.startActivityForResult(Intent.createChooser(intent, mainActivity.getString(R.string.select_file)), PICK_AUDIO_FILES);
             }
         });
-        ((LinearLayout) findViewById(R.id.folder_layout)).setOnClickListener(new View.OnClickListener() { // from class: com.amg.compressaudio.MainActivity.6
+        findViewById(R.id.folder_layout).setOnClickListener(new View.OnClickListener() { // from class: com.amg.compressaudio.MainActivity.6
             @Override // android.view.View.OnClickListener
             public void onClick(View view) {
                 MainActivity.this.startActivityForResult(new Intent("android.intent.action.OPEN_DOCUMENT_TREE"), PICK_AUDIO_FOLDER);
             }
         });
-        ((LinearLayout) findViewById(R.id.output_layout)).setOnClickListener(new View.OnClickListener() { // from class: com.amg.compressaudio.MainActivity.7
+        findViewById(R.id.output_layout).setOnClickListener(new View.OnClickListener() { // from class: com.amg.compressaudio.MainActivity.7
             @Override // android.view.View.OnClickListener
             public void onClick(View view) {
                 OutputsActivity.launch(MainActivity.this, new File(MainActivity.this.outputFolder));
@@ -193,7 +193,7 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (data != null && resultCode == -1) {
             if (requestCode == 1) {
-                new CompressAudios(data).execute(new String[0]);
+                new CompressAudios(data).execute();
             } else if (requestCode == 2) {
                 DocumentFile fromTreeUri = DocumentFile.fromTreeUri(this, data.getData());
                 ArrayList arrayList = new ArrayList();
@@ -202,7 +202,7 @@ public class MainActivity extends AppCompatActivity {
                         arrayList.add(documentFile.getUri());
                     }
                 }
-                new CompressAudios(arrayList).execute(new String[0]);
+                new CompressAudios(arrayList).execute();
             }
         }
     }

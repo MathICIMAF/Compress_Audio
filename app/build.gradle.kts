@@ -10,7 +10,7 @@ android {
         applicationId = "com.amg.compressaudio"
         minSdk = 24
         targetSdk = 33
-        versionCode = 10
+        versionCode = 16
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"

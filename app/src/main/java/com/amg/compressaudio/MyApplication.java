@@ -30,6 +30,8 @@ public class MyApplication extends Application implements Application.ActivityLi
     String channelId = "Progress Notification";
     private Activity currentActivity;
 
+    private static int counter = 1;
+
     /* loaded from: classes.dex */
     public interface OnShowAdCompleteListener {
         void onShowAdComplete();
@@ -148,7 +150,7 @@ public class MyApplication extends Application implements Application.ActivityLi
 
         /* JADX INFO: Access modifiers changed from: private */
         public void showAdIfAvailable(final Activity activity, final OnShowAdCompleteListener onShowAdCompleteListener) {
-            if (this.isShowingAd) {
+            if (this.isShowingAd || counter % 2 == 0) {
                 Log.d(LOG_TAG, "The app open ad is already showing.");
             } else if (!isAdAvailable()) {
                 Log.d(LOG_TAG, "The app open ad is not ready yet.");
@@ -181,6 +183,7 @@ public class MyApplication extends Application implements Application.ActivityLi
                     }
                 });
                 this.isShowingAd = true;
+                counter++;
                 this.appOpenAd.show(activity);
             }
         }
