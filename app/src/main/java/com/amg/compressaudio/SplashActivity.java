@@ -1,18 +1,14 @@
 package com.amg.compressaudio;
 
-import android.app.Application;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.util.Log;
+
 import androidx.appcompat.app.AppCompatActivity;
-import com.amg.compressaudio.MyApplication;
 
 /* loaded from: classes.dex */
 public class SplashActivity extends AppCompatActivity {
     private static final long COUNTER_TIME = 5;
-    private static final String LOG_TAG = "SplashActivity";
-    private long secondsRemaining;
 
     /* JADX INFO: Access modifiers changed from: protected */
     @Override // androidx.fragment.app.FragmentActivity, androidx.activity.ComponentActivity, androidx.core.app.ComponentActivity, android.app.Activity
@@ -26,24 +22,11 @@ public class SplashActivity extends AppCompatActivity {
         new CountDownTimer(seconds * 1000, 1000L) { // from class: com.amg.compressaudio.SplashActivity.1
             @Override // android.os.CountDownTimer
             public void onTick(long millisUntilFinished) {
-                SplashActivity.this.secondsRemaining = (millisUntilFinished / 1000) + 1;
             }
 
             @Override // android.os.CountDownTimer
             public void onFinish() {
-                SplashActivity.this.secondsRemaining = 0L;
-                Application application = SplashActivity.this.getApplication();
-                if (!(application instanceof MyApplication)) {
-                    Log.e(SplashActivity.LOG_TAG, "Failed to cast application to MyApplication.");
-                    SplashActivity.this.startMainActivity();
-                    return;
-                }
-                ((MyApplication) application).showAdIfAvailable(SplashActivity.this, new MyApplication.OnShowAdCompleteListener() { // from class: com.amg.compressaudio.SplashActivity.1.1
-                    @Override // com.amg.compressaudio.MyApplication.OnShowAdCompleteListener
-                    public void onShowAdComplete() {
-                        SplashActivity.this.startMainActivity();
-                    }
-                });
+                SplashActivity.this.startMainActivity();
             }
         }.start();
     }

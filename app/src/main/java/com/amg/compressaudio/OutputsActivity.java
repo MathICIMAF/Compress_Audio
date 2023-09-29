@@ -23,14 +23,12 @@ import java.util.List;
 
 /* loaded from: classes.dex */
 public class OutputsActivity extends AppCompatActivity {
-    private static final String VIEWS = "Views";
+
     private static File folder;
-    AdView adView;
     SharedPreferences.Editor edit;
     List<AudioFile> files = new ArrayList();
     private RecyclerView.LayoutManager lManager;
     private RecyclerView list;
-    private InterstitialAd mInterstitialAd;
     SharedPreferences preference;
     int views;
 
@@ -51,7 +49,6 @@ public class OutputsActivity extends AppCompatActivity {
         SharedPreferences preferences = getPreferences(0);
         this.preference = preferences;
         this.edit = preferences.edit();
-        this.views = this.preference.getInt(VIEWS, 1);
         for (int i = 0; i < folder.listFiles().length; i++) {
             try {
                 this.files.add(new AudioFile(folder.listFiles()[i]));
@@ -73,47 +70,10 @@ public class OutputsActivity extends AppCompatActivity {
         this.list.setAdapter(new AudiosAdapter(this.files, this));
     }
 
-    public void loadAdInter() {
-        InterstitialAd.load(this, getString(R.string.inter), new AdRequest.Builder().build(), new InterstitialAdLoadCallback() { // from class: com.amg.compressaudio.OutputsActivity.1
-            @Override // com.google.android.gms.ads.AdLoadCallback
-            public void onAdLoaded(InterstitialAd interstitialAd) {
-                OutputsActivity.this.mInterstitialAd = interstitialAd;
-                interstitialAd.setFullScreenContentCallback(new FullScreenContentCallback() { // from class: com.amg.compressaudio.OutputsActivity.1.1
-                    @Override // com.google.android.gms.ads.FullScreenContentCallback
-                    public void onAdShowedFullScreenContent() {
-                    }
-
-                    @Override // com.google.android.gms.ads.FullScreenContentCallback
-                    public void onAdDismissedFullScreenContent() {
-                        OutputsActivity.this.mInterstitialAd = null;
-                    }
-
-                    @Override // com.google.android.gms.ads.FullScreenContentCallback
-                    public void onAdFailedToShowFullScreenContent(AdError adError) {
-                        OutputsActivity.this.mInterstitialAd = null;
-                    }
-                });
-            }
-
-            @Override // com.google.android.gms.ads.AdLoadCallback
-            public void onAdFailedToLoad(LoadAdError loadAdError) {
-                OutputsActivity.this.mInterstitialAd = null;
-            }
-        });
-    }
-
     /* JADX INFO: Access modifiers changed from: protected */
     @Override // androidx.fragment.app.FragmentActivity, android.app.Activity
     public void onResume() {
         super.onResume();
     }
 
-    private void showInterstitial() {
-        InterstitialAd interstitialAd = this.mInterstitialAd;
-        if (interstitialAd != null) {
-            interstitialAd.show(this);
-            this.edit.putInt(VIEWS, this.views + 1);
-            this.edit.apply();
-        }
-    }
 }

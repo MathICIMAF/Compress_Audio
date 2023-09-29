@@ -1,21 +1,35 @@
 package com.amg.compressaudio;
 
+import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
+import android.os.ParcelFileDescriptor;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
+import android.provider.OpenableColumns;
 import android.text.TextUtils;
+
+import com.google.android.gms.common.util.IOUtils;
+
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.util.Objects;
 
 /* loaded from: classes.dex */
 public class RealPathUtil {
+    public static final String TEMP_FILE = "TMP";
+
     public static String getRealPath(Context context, Uri fileUri) {
         return getRealPathFromURI_API19(context, fileUri);
     }
@@ -32,8 +46,28 @@ public class RealPathUtil {
                 return "";
             } else if (isDownloadsDocument(uri)) {
                 String documentId = DocumentsContract.getDocumentId(uri);
-                if (documentId != null && documentId.startsWith("raw:/")) {
+
+                if (documentId != null && (documentId.startsWith("raw:/"))) {
                     return Uri.parse(documentId).getPath();
+                }
+                if (documentId != null && documentId.startsWith("msf:") && Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q){
+                    try {
+                        ParcelFileDescriptor parcelFileDescriptor = context.getContentResolver().openFileDescriptor(uri,"r",null);
+                        FileInputStream inputStream  = new FileInputStream(
+                                parcelFileDescriptor.getFileDescriptor());
+                        File file = new File(
+                                context.getCacheDir(),
+                                getFileName(uri,context));
+                        FileOutputStream outputStream = new FileOutputStream(file);
+                        try {
+                            IOUtils.copyStream(inputStream, outputStream);
+                            return file.getPath();
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                    } catch (FileNotFoundException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
                 String[] strArr = {"content://downloads/public_downloads", "content://downloads/my_downloads"};
                 for (int i = 0; i < 2; i++) {
@@ -61,6 +95,24 @@ public class RealPathUtil {
             return getDataColumn(context, uri, null, null);
         } else {
             return "file".equalsIgnoreCase(uri.getScheme()) ? uri.getPath() : "";
+        }
+    }
+
+    public static String getFileName(Uri fileUri, Context context){
+        String name= "";
+        ContentResolver contentResolver = context.getContentResolver();
+        Cursor returnCursor = contentResolver.query(fileUri,null,null,null,null);
+        if (returnCursor != null){
+            int nameIndex = returnCursor.getColumnIndex(
+                    OpenableColumns.DISPLAY_NAME);
+            returnCursor.moveToFirst();
+            name = returnCursor.getString(nameIndex);
+            returnCursor.close();
+        }
+        try {
+            return URLEncoder.encode(name, "utf-8");
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -120,14 +172,19 @@ public class RealPathUtil {
         }
     }
 
-    public static String newFilePath(String suffix, String fileName, String folder, String format) {
+    public static String newFilePath(String suffix, String fileName, String folder) {
         String[] split = fileName.split("\\.");
+        String format = split[split.length-1];
         return folder + (fileName.substring(0, (fileName.length() - split[split.length - 1].length()) - 1) + suffix + "." + format);
     }
 
+    public static String newFilePath(String suffix, String fileName, String folder,String ext) {
+        String[] split = fileName.split("\\.");
+        return folder + (fileName.substring(0, (fileName.length() - split[split.length - 1].length()) - 1) + suffix + "." + ext);
+    }
 
     public static String copyFileToInternal(Context context, Uri fileUri) {
-        if (Build.VERSION.SDK_INT >= 26) {
+        /*if (Build.VERSION.SDK_INT >= 26) {
             Cursor query = context.getContentResolver().query(fileUri, new String[]{"_display_name", "_size"}, null, null);
             query.moveToFirst();
             String string = query.getString(query.getColumnIndex("_display_name"));
@@ -150,7 +207,7 @@ public class RealPathUtil {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }
+        }*/
         return null;
     }
 }

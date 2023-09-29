@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <ListPreference android:enabled="true" android:entries="@array/formats" android:title="@string/format" android:selectable="true" android:key="format" android:summary="@string/select_format" android:defaultValue="mp3" android:entryValues="@array/formats"/>
+    <!--<ListPreference android:enabled="true" android:entries="@array/formats" android:title="@string/format" android:selectable="true" android:key="format" android:summary="@string/select_format" android:defaultValue="mp3" android:entryValues="@array/formats"/>
+    -->
     <ListPreference android:enabled="true" android:entries="@array/qualities" android:title="@string/select_bitrate" android:selectable="true" android:key="bitrate" android:summary="@string/select_quality" android:defaultValue="56k" android:entryValues="@array/qualities"/>
 </PreferenceScreen>

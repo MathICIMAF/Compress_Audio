@@ -54,6 +54,15 @@ public class AudiosAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 AudiosAdapter.this.context.startActivity(Intent.createChooser(intent, "Share audio"));
             }
         });
+        audioViewHolder.delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                files.remove(audioFile);
+                audioFile.getFile().delete();
+                notifyItemRemoved(position);
+                notifyItemRangeChanged(position, files.size());
+            }
+        });
         audioViewHolder.layout.setOnClickListener(new View.OnClickListener() { // from class: com.amg.compressaudio.AudiosAdapter.2
             @Override // android.view.View.OnClickListener
             public void onClick(View view) {
@@ -82,7 +91,7 @@ public class AudiosAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         public TextView lastModified;
         public LinearLayout layout;
         public TextView name;
-        public ImageButton share;
+        public ImageButton share,delete;
         public TextView size;
 
         public AudioViewHolder(View itemView) {
@@ -91,6 +100,7 @@ public class AudiosAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             this.name = (TextView) itemView.findViewById(R.id.title);
             this.size = (TextView) itemView.findViewById(R.id.size);
             this.share = (ImageButton) itemView.findViewById(R.id.share);
+            this.delete = (ImageButton)itemView.findViewById(R.id.delete);
             this.lastModified = (TextView) itemView.findViewById(R.id.modification);
         }
     }
